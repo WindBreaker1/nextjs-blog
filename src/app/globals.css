@@ -35,6 +35,19 @@ a {
   text-decoration: none;
 }
 
+table {
+  padding: 5px;
+}
+
+table * {
+  padding: 10px;
+  border: 1px solid white;
+}
+
+ul li::marker {
+  content: "\1F604"; /* Replace with the desired emoji's Unicode value */
+}
+
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;
