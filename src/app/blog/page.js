@@ -34,6 +34,8 @@ const Blog = () => {
         ))}
       </ul>
 
+      <Link href="/">Back to Home</Link>
+
     </div>
   )
 }

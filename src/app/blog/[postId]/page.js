@@ -8,7 +8,6 @@ export default function PostPage({ params: paramsPromise }) {
   const [post, setPost] = useState(null);
   const params = use(paramsPromise);
   let { postId } = params;
-  console.log(postId);
 
   const fetchPost = async (id) => {
     const res = await fetch(`/api/posts/${id}`);
@@ -43,12 +42,13 @@ export default function PostPage({ params: paramsPromise }) {
   const contentHtml = marked(post.content);
 
   return (
-    <div>
+    <div className='blog-post'>
       <h1>{post.title}</h1>
       <div
         className="post-content"
         dangerouslySetInnerHTML={{ __html: contentHtml }}
       />
+      <hr></hr>
       <Link href="/blog">Back to Blog</Link>
     </div>
   );
