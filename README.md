@@ -17,4 +17,4 @@ A full stack blog app using Next.js and MySql.
 
 - run the dev server with `npm run dev`
 - consider Vercel for deployment
-
+- user schema: id, username, email, password_hash, profile_picture, banner_picture, description, created_at, last_edited_at
