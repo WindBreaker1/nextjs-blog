@@ -22,7 +22,7 @@ const Blog = () => {
   }, [])
 
   return (
-    <div>
+    <div className='page'>
       <h1>Blog</h1>
 
       <ul>
@@ -35,7 +35,8 @@ const Blog = () => {
       </ul>
 
       <Link href="/">Back to Home</Link>
-
+      
+      <Link href="/blog/create-post">Create New Post</Link>
     </div>
   )
 }

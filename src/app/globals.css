@@ -40,6 +40,11 @@ a:hover {
   text-decoration: underline;
 }
 
+button {
+  cursor: pointer;
+  height: 40px;
+}
+
 table {
   padding: 5px;
 }
@@ -51,6 +56,32 @@ table * {
 
 ul, ol {
   margin-left: 20px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+input {
+  padding: 10px;
+}
+
+select {
+  padding: 10px;
+  cursor: pointer;
+}
+
+textarea {
+  min-width: fit-content;
+  min-height: 300px;
+  padding: 10px;
+  resize: none;
+}
+
+.page {
+  padding: 30px;
 }
 
 .blog-post {

@@ -8,7 +8,21 @@
 ## To-Do's
 
 - [ ] Sanytize HTML content for Markdown renderer to avoid hacks.
+- [ ] Let people import txt and md files.
 
+## Info
+
+### Post Schema
+
+- id, slug, title, status (private, public), author (user.name), tags, content, likes, dislikes, comments, created_at, last_edited_at
+
+### User Schema
+
+- 
+
+### Comment Schema
+
+- 
 
 ---
 

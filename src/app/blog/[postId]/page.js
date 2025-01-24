@@ -6,6 +6,7 @@ import { marked } from 'marked';
 
 export default function PostPage({ params: paramsPromise }) {
   const [post, setPost] = useState(null);
+  const [tags, setTags] = useState([]);
   const params = use(paramsPromise);
   let { postId } = params;
 
@@ -14,11 +15,18 @@ export default function PostPage({ params: paramsPromise }) {
     const data = await res.json();
     setPost(data);
   }
+  const fetchTags = async (id) => {
+    const res = await fetch(`/api/posts/${id}/tags`);
+    const data = await res.json();
+    setTags(data);
+  };
   useEffect(() => {
     if (postId) {
       fetchPost(postId);
+      fetchTags(postId)
     }
   }, [postId]);
+
 
   if (!postId) {
     return <div>No post id was provided.</div>
@@ -44,10 +52,22 @@ export default function PostPage({ params: paramsPromise }) {
   return (
     <div className='blog-post'>
       <h1>{post.title}</h1>
+      <p>Author: {post.author}</p>
+      <p>Created at: {post.created_at}</p>
+      <ul>
+        {tags.length > 0 ? (
+          tags.map((tag, index) => <li key={index}>{tag.name}</li>)
+        ) : (
+          <li>No tags found for this post.</li>
+        )}
+      </ul>
       <div
         className="post-content"
         dangerouslySetInnerHTML={{ __html: contentHtml }}
       />
+      <hr></hr>
+      <p>Likes: {post.likes}</p>
+      <p>Dislikes: {post.dislikes}</p>
       <hr></hr>
       <Link href="/blog">Back to Blog</Link>
     </div>
