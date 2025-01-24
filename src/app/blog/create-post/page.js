@@ -10,15 +10,22 @@ const CreatePost = () => {
   const [slug, setSlug] = useState('');
   const [author, setAuthor] = useState('');
   const [status, setStatus] = useState('');
+  const [tagsInput, setTagsInput] = useState('');
   const [tags, setTags] = useState([]);
   const [content, setContent] = useState('');
   const [message, setMessage] = useState('');
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    const formattedTags = tagsInput
+      .split(',')
+      .map((tag) => tag.trim()) // Remove extra whitespace
+      .filter((tag) => tag.length > 0); // Ignore empty strings
+
     const res = await fetch('/api/posts', {
       method: 'POST', 
-      body: JSON.stringify({ title, slug, author, status, tags, content }),
+      body: JSON.stringify({ title, slug, author, status, tags: formattedTags, content }),
     })
 
     if (res.ok) {
@@ -26,6 +33,7 @@ const CreatePost = () => {
       setSlug('')
       setAuthor('')
       setStatus('')
+      setTagsInput('')
       setTags([])
       setContent('')
       setMessage('Post added succsessfully!');
@@ -48,7 +56,7 @@ const CreatePost = () => {
           <option value='public'>Public</option>
           <option value='private'>Private</option>
         </select>
-        <input type='text' id='tags' value={tags} onChange={(e) => setTags(e.target.value)} placeholder='Tags' />
+        <input type='text' id='tags' value={tagsInput} onChange={(e) => setTagsInput(e.target.value)} placeholder='Tags' />
         <textarea id="content" value={content} onChange={(e) => setContent(e.target.value)} placeholder='Content' />
         <button type='submit'>Add Post</button>
       </form>

@@ -54,6 +54,7 @@ export default function PostPage({ params: paramsPromise }) {
       <h1>{post.title}</h1>
       <p>Author: {post.author}</p>
       <p>Created at: {post.created_at}</p>
+      <p>Tags:</p>
       <ul>
         {tags.length > 0 ? (
           tags.map((tag, index) => <li key={index}>{tag.name}</li>)
