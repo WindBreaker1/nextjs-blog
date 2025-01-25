@@ -1,0 +1,15 @@
+.loginPage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 50px;
+  padding: 50px;
+}
+
+.loginForm {
+  background-color: #303030;
+  border-radius: 25px;
+  padding: 50px;
+  min-width: 500px;
+}

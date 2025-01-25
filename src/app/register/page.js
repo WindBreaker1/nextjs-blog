@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from 'react'
+import styles from './register.module.css'
 
 const RegisterPage = () => {
   const [username, setUsername] = useState('');
@@ -31,9 +32,9 @@ const RegisterPage = () => {
   }
   
   return (
-    <div className='page'>
+    <div className={styles.registerPage}>
       <h1>Register</h1>
-      <form onSubmit={handleRegister}>
+      <form className={styles.registerForm} onSubmit={handleRegister}>
         <input type='text' id='username' value={username} onChange={(e) => setUsername(e.target.value)} placeholder='Username' />
         <input type='text' id='email' value={email} onChange={(e) => setEmail(e.target.value)} placeholder='Email' />
         <input type='text' id='password' value={password} onChange={(e) => setPassword(e.target.value)} placeholder='Password' />
