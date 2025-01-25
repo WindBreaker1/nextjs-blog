@@ -22,6 +22,9 @@ const RegisterPage = () => {
 
     if (res.ok) {
       console.log('Registration successful!', data)
+      setUsername('')
+      setEmail('')
+      setPassword('')
     } else {
       console.log('Registration unsuccessful!', data)
     }

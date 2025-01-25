@@ -8,7 +8,7 @@ dotenv.config({ path: '.env.local' });
 const JWT_SECRET = process.env.MY_JWT_SECRET;
 
 export async function POST(req, res) {
-  const { username, password } = req.body;
+  const { username, password } = await req.json();
 
   const [users] = await db.query('SELECT * FROM users WHERE username = ?', [username]);
 
@@ -18,5 +18,5 @@ export async function POST(req, res) {
 
   const token = jwt.sign({userId: user.id}, JWT_SECRET, {expiresIn: '7d'});
 
-  return new Response('Login successful!')
+  return new Response(JSON.stringify(user))
 }

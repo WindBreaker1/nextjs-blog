@@ -10,16 +10,11 @@ export async function POST(req, res) {
     return new Response('User already exists.')
   }
 
-  try {
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
-    console.log('Hashed password:', hashedPassword);
-  } catch (error) {
-    console.error('Error hashing password:', error);
-    throw new Error('Password hashing failed');
-  }
+  const salt = await bcrypt.genSalt(10);
+  const hashedPassword = await bcrypt.hash(password, salt);
+  console.log('Hashed password:', hashedPassword);
 
   const [result] = await db.query('INSERT INTO users (username, email, password_hash) VALUES (?, ?, ?)', [username, email, hashedPassword]);
 
-  return new Response('User registered successfully.', result)
+  return new Response(JSON.stringify(result));
 }
