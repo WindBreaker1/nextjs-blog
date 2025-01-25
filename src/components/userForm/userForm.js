@@ -77,7 +77,7 @@ export default function UserForm() {
 
   const handleEdit = (user) => {
     setId(user.id);
-    setName(user.name);
+    setName(user.username);
     setEmail(user.email);
     setIsEditing(true);
   };
@@ -90,7 +90,7 @@ export default function UserForm() {
       <ul>
         {users.map((user) => (
           <li key={user.id}>
-            {user.id} | {user.name} | ({user.email})
+            {user.id} | {user.username} | ({user.email})
             <button onClick={() => handleEdit(user)}>Edit</button>
             <button onClick={() => handleDelete(user.id)}>Delete</button>
           </li>

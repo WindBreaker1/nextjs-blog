@@ -11,7 +11,7 @@ A full stack blog app using Next.js and MySql.
 
 ## Bugs
 
-- [ ] None
+- [ ] There may be a problem with deprecated or dependancies of `bcrypt`. See if they cause any issues.
 
 ## Info
 
