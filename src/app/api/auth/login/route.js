@@ -21,7 +21,14 @@ export async function POST(req) {
 
   const isPasswordValid = await bcrypt.compare(password, user.password_hash);
 
-  const token = jwt.sign({userId: user.id, username: user.username}, JWT_SECRET, {expiresIn: '7d'});
+  const token = jwt.sign({
+    userId: user.id,
+    username: user.username,
+    email: user.email,
+    profile_picture: user.profile_picture,
+    banner_picture: user.banner_picture,
+    description: user.description,
+    }, JWT_SECRET, {expiresIn: '7d'});
 
   return new Response(JSON.stringify({ token }), { status: 200 });
 }

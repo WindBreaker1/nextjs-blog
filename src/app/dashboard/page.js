@@ -1,65 +1,109 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useUser } from "../middleware/userContext";
+import Modal from "@/components/modal/modal";
+import styles from './dashboard.module.css'
 
 function Dashboard() {
-  const [user, setUser] = useState(null);
+  const { user, logout } = useUser();
+  const [editingField, setEditingField] = useState(null);
+  const [inputValue, setInputValue] = useState("");
 
-  useEffect(() => {
-    // Retrieve the token from cookies
-    const token = getCookie("token");
+  const handleUpdate = async () => {
+    const token = document.cookie.split("token=")[1]; // Get token from cookies
 
-    console.log("Token from cookies:", token); // Debugging: Check the token value
+    const body = JSON.stringify({
+      field: editingField,
+      value: inputValue,
+    });
 
-    if (token) {
-      try {
-        // Check if the token is in the correct format (has 3 parts: header, payload, signature)
-        const tokenParts = token.split(".");
-        
-        if (tokenParts.length === 3) {
-          // Decode the payload (the second part of the token)
-          const decodedToken = JSON.parse(atob(tokenParts[1]));
-          
-          console.log("Decoded token:", decodedToken); // Debugging: Check the decoded token
-          
-          // Ensure the decoded token has the 'username' property (or whatever user info is in the payload)
-          if (decodedToken && decodedToken.username) {
-            setUser(decodedToken);
-          } else {
-            console.error("Invalid token payload: Missing 'username'");
-          }
-        } else {
-          console.error("Invalid token format: Token should have 3 parts");
-        }
-      } catch (error) {
-        console.error("Error decoding token:", error);
-      }
+    const res = await fetch("/api/user/update", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`, // Send token
+      },
+      body,
+    });
+
+    if (res.ok) {
+      const data = await res.json();
+      alert(`${data.field} updated successfully!`);
+      setEditingField(null); // Close edit mode
+      window.location.reload(); // Refresh the page to fetch updated data
+    } else {
+      alert("Failed to update. Please try again.");
     }
-  }, []);
-
-  // Function to get the cookie by name
-  const getCookie = (name) => {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) return parts.pop().split(';').shift();
-    return null;
   };
 
-  const handleLogout = () => {
-    // Remove the token from cookies
-    document.cookie = "token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT;";
-    window.location.href = "/login";
+  const handleOpenModal = (field) => {
+    setEditingField(field);
+    setInputValue(user[field] || "");
+  };
+
+  const handleCloseModal = () => {
+    setEditingField(null);
+    setInputValue("");
+  };
+
+  const handleInputChange = (e) => {
+    setInputValue(e.target.value);
   };
 
   return (
     <div className="page">
       {user ? (
-        <div>
-          <h1>Hello, {user.username}!</h1>
-          <button onClick={handleLogout}>Logout</button>
+        <div className={styles.dashboard}>
+          <h1>{user.username}'s Dashboard</h1>
+
+          <div className={styles.section}>
+            <p>Name: {user.username}</p>
+            <button onClick={() => handleOpenModal("username")} className={styles.sectionButton}>Change Username</button>
+          </div>
+          <hr className={styles.divider}></hr>
+
+          <div className={styles.section}>
+            <img className={styles.profilePicture} src={user.profile_picture}></img>
+            <button className={styles.sectionButton}>Change Profile Picture</button>
+          </div>
+          <hr className={styles.divider}></hr>
+
+          <div className={styles.section}>
+            <p>Description: {user.description}</p>
+            <button className={styles.sectionButton}>Change Description</button>
+          </div>
+          <hr className={styles.divider}></hr>
+
+          <div className={styles.section}>
+            <p>Logout</p>
+            <button className={styles.sectionButton} id={styles.logout} onClick={logout}>Logout</button>
+          </div>
+          <hr className={styles.divider}></hr>
+
+          <div className={styles.section}>
+            <p>Delete Account</p>
+            <button className={styles.sectionButton} id={styles.delete}>Delete Account</button>
+          </div>
+          <hr className={styles.divider}></hr>
+
+          {/* Render Modal */}
+          {editingField && (
+            <Modal
+              field={editingField}
+              value={inputValue}
+              onClose={handleCloseModal}
+              onSave={handleUpdate}
+              onInputChange={handleInputChange}
+            />
+          )}
+
+
         </div>
       ) : (
-        <p>Please log in to access your dashboard.</p>
+        <div className="page">
+          <p>Please log in to access your dashboard.</p>
+        </div>
       )}
     </div>
   );
