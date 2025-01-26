@@ -18,7 +18,7 @@ function Dashboard() {
       value: inputValue,
     });
 
-    const res = await fetch("/api/user/update", {
+    const res = await fetch("/api/users", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
