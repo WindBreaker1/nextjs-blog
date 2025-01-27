@@ -18,23 +18,44 @@ export async function POST(req, res) {
 }
 
 export async function PUT(req) {
-  const token = req.headers.authorization?.split(" ")[1];
+  try {
+    const authHeader = req.headers.get("authorization");
 
-  const decoded = jwt.verify(token, JWT_SECRET);
-  const userId = decoded.userId;
-  const { field, value } = await req.json();
+    // Check if the Authorization header exists
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+      return new Response(
+        JSON.stringify({ error: "Unauthorized: Token not provided" }),
+        { status: 401 }
+      );
+    }
 
-  if (!["username", "description", "profile_picture"].includes(field)) {
-    return new Response(JSON.stringify({ error: "Invalid field" }), { status: 400 });
+    // Extract and verify the token
+    const token = authHeader.split(" ")[1];
+    const decoded = jwt.verify(token, JWT_SECRET);
+
+    const userId = decoded.userId;
+    const { field, value } = await req.json();
+
+    // Validate the field being updated
+    if (!["username", "profile_picture", "description"].includes(field)) {
+      return new Response(JSON.stringify({ error: "Invalid field" }), {
+        status: 400,
+      });
+    }
+
+    // Update the user data in the database
+    await db.query(`UPDATE users SET ${field} = ? WHERE id = ?`, [value, userId]);
+
+    return new Response(
+      JSON.stringify({ field, message: `${field} updated successfully!` }),
+      { status: 200 }
+    );
+  } catch (error) {
+    console.error(error);
+    return new Response(
+      JSON.stringify({ error: "Internal server error" }),
+      { status: 500 }
+    );
   }
-  if (!value || value.trim() === "") {
-    return new Response(JSON.stringify({ error: "Invalid value" }), { status: 400 });
-  }
-
-  // Update the user in the database
-  await db.query(`UPDATE users SET ${field} = ? WHERE id = ?`, [value, userId]);
-
-  return new Response(JSON.stringify({ success: true, field, value }), { status: 200 });
-
 }
 

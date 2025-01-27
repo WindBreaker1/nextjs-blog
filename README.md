@@ -8,10 +8,12 @@ A full stack blog app using Next.js and MySql.
 - [ ] Figure out the best way to construct the URL for the posts (`/blog/id` or `/blog/slug`).
 - [ ] Host the project on Hostinger to test if the Sql database works.
 - [ ] Make the tag system look and feel better in posts and creation.
+- [ ] Rewrite code with more comments.
 
 ## Bugs
 
-- [ ] There may be a problem with deprecated or dependancies of `bcrypt`. See if they cause any issues.
+- [x] There may be a problem with deprecated or dependancies of `bcrypt`. See if they cause any issues.
+- [x] User value change bug.
 
 ## Info
 

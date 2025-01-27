@@ -12,6 +12,7 @@ const Modal = ({ field, value, onClose, onSave, onInputChange }) => {
           onChange={onInputChange}
           placeholder={`Enter new ${field}`}
         />
+        <p>Log out and log back in to see the changes.</p>
         <div className={styles.modalActions}>
           <button onClick={onSave}>Save</button>
           <button onClick={onClose}>Cancel</button>

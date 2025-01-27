@@ -27,6 +27,8 @@ function Dashboard() {
       body,
     });
 
+    console.log("Token sent to backend:", token);
+
     if (res.ok) {
       const data = await res.json();
       alert(`${data.field} updated successfully!`);
@@ -65,13 +67,13 @@ function Dashboard() {
 
           <div className={styles.section}>
             <img className={styles.profilePicture} src={user.profile_picture}></img>
-            <button className={styles.sectionButton}>Change Profile Picture</button>
+            <button onClick={() => handleOpenModal("profile_picture")} className={styles.sectionButton}>Change Profile Picture</button>
           </div>
           <hr className={styles.divider}></hr>
 
           <div className={styles.section}>
             <p>Description: {user.description}</p>
-            <button className={styles.sectionButton}>Change Description</button>
+            <button onClick={() => handleOpenModal("description")} className={styles.sectionButton}>Change Description</button>
           </div>
           <hr className={styles.divider}></hr>
 
