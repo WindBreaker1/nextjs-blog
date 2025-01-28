@@ -81,6 +81,12 @@ textarea {
   resize: none;
 }
 
+blockquote {
+  background-color: #363636;
+  padding: 10px;
+  border-radius: 5px;
+}
+
 .page {
   padding: 30px;
 }

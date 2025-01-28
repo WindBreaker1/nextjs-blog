@@ -3,8 +3,10 @@
 import { redirect } from 'next/dist/server/api-utils';
 import Link from 'next/link';
 import { useState, useEffect } from 'react'
+import { useUser } from '@/app/middleware/userContext';
 
 const CreatePost = () => {
+  const { user } = useUser();
   const [post, setPost] = useState(null);
   const [title, setTitle] = useState('');
   const [slug, setSlug] = useState('');
@@ -14,6 +16,12 @@ const CreatePost = () => {
   const [tags, setTags] = useState([]);
   const [content, setContent] = useState('');
   const [message, setMessage] = useState('');
+
+  useEffect(() => {
+    if (user && user.username) {
+      setAuthor(user.username);
+    }
+  }, [user])
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -50,7 +58,7 @@ const CreatePost = () => {
       <form onSubmit={handleSubmit}>
         <input type='text' id='title' value={title} onChange={(e) => setTitle(e.target.value)} placeholder='Title' />
         <input type='text' id='slug' value={slug} onChange={(e) => setSlug(e.target.value)} placeholder='Slug' />
-        <input type='text' id='author' value={author} onChange={(e) => setAuthor(e.target.value)} placeholder='Author' />
+        <input type='text' id='author' value={author} disabled placeholder='Author' />
         <select id='status' value={status} onChange={(e) => setStatus(e.target.value)}>
           <option value="" disabled defaultValue=''>Select an option</option>
           <option value='public'>Public</option>
