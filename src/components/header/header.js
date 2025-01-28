@@ -2,7 +2,7 @@
 
 import React from 'react'
 import Link from 'next/link'
-import { useUser } from '@/app/middleware/userContext'
+import { useUser } from '@/app/api/middleware/userContext'
 import styles from './header.module.css'
 
 const Header = () => {

@@ -50,8 +50,34 @@ export const UserProvider = ({ children }) => {
     window.location.href = "/login";
   };
 
+  async function remove() {
+    const token = getCookie("token"); // Retrieve the token from cookies
+  
+    if (!token) {
+      console.error("No token found");
+      return;
+    }
+  
+    const response = await fetch(`/api/users`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`, // Include the token in the Authorization header
+      },
+    });
+  
+    if (response.ok) {
+      document.cookie = "token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT;";
+      setUser(null);
+      window.location.href = "/register";
+    } else {
+      const errorData = await response.json();
+      console.error("Failed to delete user:", errorData.error || "Unknown error");
+    }
+  }
+  
+
   return (
-    <UserContext.Provider value={{ user, logout }}>
+    <UserContext.Provider value={{ user, logout, remove }}>
       {children}
     </UserContext.Provider>
   );

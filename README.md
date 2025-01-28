@@ -5,10 +5,10 @@ A full stack blog app using Next.js and MySql.
 ## To-Do's
 
 - [ ] Sanytize HTML content for Markdown renderer to avoid hacks.
-- [ ] Figure out the best way to construct the URL for the posts (`/blog/id` or `/blog/slug`).
 - [ ] Host the project on Hostinger to test if the Sql database works.
 - [ ] Make the tag system look and feel better in posts and creation.
 - [ ] Rewrite code with more comments.
+- [ ] Figure out the best way to construct the URL for the posts (`/blog/id` or `/blog/slug`).
 
 ## Bugs
 

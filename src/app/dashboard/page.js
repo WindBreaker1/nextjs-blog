@@ -1,12 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useUser } from "../middleware/userContext";
+import { useUser } from "../api/middleware/userContext";
 import Modal from "@/components/modal/modal";
 import styles from './dashboard.module.css'
 
 function Dashboard() {
-  const { user, logout } = useUser();
+  const { user, logout, remove } = useUser();
   const [editingField, setEditingField] = useState(null);
   const [inputValue, setInputValue] = useState("");
 
@@ -85,7 +85,7 @@ function Dashboard() {
 
           <div className={styles.section}>
             <p>Delete Account</p>
-            <button className={styles.sectionButton} id={styles.delete}>Delete Account</button>
+            <button className={styles.sectionButton} id={styles.delete} onClick={remove}>Delete Account</button>
           </div>
           <hr className={styles.divider}></hr>
 

@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
-import db from '@/app/lib/db'
+import db from '@/app/api/lib/db'
 import { NextResponse } from 'next/server';
 import dotenv from 'dotenv';
 

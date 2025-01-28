@@ -1,4 +1,4 @@
-import db from '@/app/lib/db.js';
+import db from '@/app/api/lib/db.js';
 import jwt from "jsonwebtoken"
 import dotenv from "dotenv"
 
@@ -59,3 +59,32 @@ export async function PUT(req) {
   }
 }
 
+export async function DELETE(req) {
+  try {
+    const authHeader = req.headers.get("authorization");
+
+    // Check if the Authorization header exists
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+      return new Response(
+        JSON.stringify({ error: "Unauthorized: Token not provided" }),
+        { status: 401 }
+      );
+    }
+
+    // Extract and verify the token
+    const token = authHeader.split(" ")[1];
+    const decoded = jwt.verify(token, JWT_SECRET);
+
+    const userId = decoded.userId;
+
+    await db.query('DELETE FROM users WHERE id = ?', [userId])
+
+    return new Response(JSON.stringify('User deleted succesfully!'), { status: 200 })
+  } catch (error) {
+    console.error(error);
+    return new Response(
+      JSON.stringify({ error: "Internal server error" }),
+      { status: 500 }
+    );
+  }
+}

@@ -1,4 +1,4 @@
-import db from "@/app/lib/db";
+import db from "@/app/api/lib/db";
 
 export async function GET(req, {params}) {
   const { id } = await params;

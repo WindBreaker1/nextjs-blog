@@ -3,7 +3,7 @@
 import { redirect } from 'next/dist/server/api-utils';
 import Link from 'next/link';
 import { useState, useEffect } from 'react'
-import { useUser } from '@/app/middleware/userContext';
+import { useUser } from '@/app/api/middleware/userContext';
 
 const CreatePost = () => {
   const { user } = useUser();
