@@ -46,6 +46,9 @@ export async function PUT(req) {
     // Update the user data in the database
     await db.query(`UPDATE users SET ${field} = ? WHERE id = ?`, [value, userId]);
 
+    // Update the post data in the database
+    
+
     return new Response(
       JSON.stringify({ field, message: `${field} updated successfully!` }),
       { status: 200 }

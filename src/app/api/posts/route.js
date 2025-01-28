@@ -1,7 +1,7 @@
 import db from '@/app/api/lib/db.js';
 
 export async function GET(req, res) {
-  const [results] = await db.query('SELECT * FROM posts');
+  const [results] = await db.query('SELECT * FROM posts WHERE status = "public"');
   return new Response(JSON.stringify(results));
 }
 

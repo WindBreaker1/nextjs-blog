@@ -2,13 +2,37 @@
 
 import { useEffect, useState } from "react";
 import { useUser } from "../api/middleware/userContext";
+import Link from "next/link";
 import Modal from "@/components/modal/modal";
 import styles from './dashboard.module.css'
 
 function Dashboard() {
   const { user, logout, remove } = useUser();
+  const [ posts, setPosts ] = useState([])
   const [editingField, setEditingField] = useState(null);
   const [inputValue, setInputValue] = useState("");
+
+  async function fetchUserPosts() {
+    const token = document.cookie.split("token=")[1]; // Retrieve token from cookies
+  
+    const response = await fetch("/api/posts/user", {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  
+    if (response.ok) {
+      const results = await response.json();
+      setPosts(results)
+    } else {
+      console.error("Failed to fetch posts:", await response.json());
+    }
+  }
+  
+  useEffect(() => {
+    fetchUserPosts();
+  }, [])
 
   const handleUpdate = async () => {
     const token = document.cookie.split("token=")[1]; // Get token from cookies
@@ -99,7 +123,15 @@ function Dashboard() {
               onInputChange={handleInputChange}
             />
           )}
-
+          
+          <h2>Posts</h2>
+          <ul>
+            {posts.map((post) => (
+              <li key={post.id}>
+                <Link href={`/blog/${post.id}`}>{post.title}</Link>
+              </li>
+            ))}
+      </ul>
 
         </div>
       ) : (
