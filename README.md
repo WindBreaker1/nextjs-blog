@@ -4,9 +4,10 @@ A full stack blog app using Next.js and MySql.
 
 ## To-Do's
 
-- [ ] Sanytize HTML content for Markdown renderer to avoid hacks.
 - [ ] Host the project on Hostinger to test if the Sql database works.
+- [ ] Implement post privacy: public posts can be found by anybody, while private posts are just seen by the original user.
 - [ ] Make the tag system look and feel better in posts and creation.
+- [ ] Sanytize HTML content for Markdown renderer to avoid hacks.
 - [ ] Rewrite code with more comments.
 - [ ] Figure out the best way to construct the URL for the posts (`/blog/id` or `/blog/slug`).
 
