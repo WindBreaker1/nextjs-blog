@@ -25,30 +25,30 @@ const Blog = () => {
     <div className='page'>
       <h1>Blog</h1>
 
-      <ul>
-        {posts.map((post) => (
-          <li key={post.id}>
-            <Link href={`/blog/${post.id}`}>{post.title}</Link>
-          </li>
-        ))}
-      </ul>
+      <br></br>
+
+      <h2>Search Bar</h2>
+
+      <br></br>
 
       <table>
         <thead>
           <tr>
             <th>Name</th>
             <th>Author</th>
+            <th>Likes</th>
           </tr>
         </thead>
         <tbody>
-          <td>Post</td>
-          <td>Andrei</td>
+          {posts.map((post, index) => (
+            <tr key={index}>
+              <td><Link href={`/blog/${post.id}`}>{post.title}</Link></td>
+              <td>{post.author}</td>
+              <td>{post.likes}</td>
+            </tr>
+          ))}
         </tbody>
       </table>
-
-      <Link href="/">Back to Home</Link>
-      
-      <Link href="/blog/create-post">Create New Post</Link>
     </div>
   )
 }

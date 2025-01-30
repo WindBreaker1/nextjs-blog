@@ -1,6 +1,5 @@
 "use client"
 
-import { redirect } from 'next/dist/server/api-utils';
 import Link from 'next/link';
 import { useState, useEffect } from 'react'
 import { useUser } from '@/app/api/middleware/userContext';
@@ -51,9 +50,12 @@ const CreatePost = () => {
   return (
     <div className='page'>
       <h1>Create Your Post!</h1>
+
+      <br></br>
+
       {message && <p>{message}</p>}
 
-      <Link href='/blog'>Go Back to Blog</Link>
+      <br></br>
 
       <form onSubmit={handleSubmit}>
         <input type='text' id='title' value={title} onChange={(e) => setTitle(e.target.value)} placeholder='Title' />

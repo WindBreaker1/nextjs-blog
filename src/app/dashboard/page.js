@@ -125,13 +125,25 @@ function Dashboard() {
           )}
           
           <h2>Posts</h2>
-          <ul>
-            {posts.map((post) => (
-              <li key={post.id}>
-                <Link href={`/blog/${post.id}`}>{post.title}</Link>
-              </li>
-            ))}
-      </ul>
+          
+          <table>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Likes</th>
+                <th>Dislikes</th>
+              </tr>
+            </thead>
+            <tbody>
+              {posts.map((post, index) => (
+                <tr key={index}>
+                  <td><Link href={`/blog/${post.id}`}>{post.title}</Link></td>
+                  <td>{post.likes}</td>
+                  <td>{post.dislikes}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
 
         </div>
       ) : (

@@ -48,9 +48,17 @@ button {
 
 table {
   padding: 5px;
+  border-collapse: collapse;
+  border: 1px solid white;
+  width: 100%;
 }
 
-table * {
+thead {
+  background-color: #292929;
+  border-bottom: 2px solid white;
+}
+
+th, td {
   padding: 10px;
   border: 1px solid white;
 }
