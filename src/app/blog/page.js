@@ -29,10 +29,22 @@ const Blog = () => {
         {posts.map((post) => (
           <li key={post.id}>
             <Link href={`/blog/${post.id}`}>{post.title}</Link>
-
           </li>
         ))}
       </ul>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Author</th>
+          </tr>
+        </thead>
+        <tbody>
+          <td>Post</td>
+          <td>Andrei</td>
+        </tbody>
+      </table>
 
       <Link href="/">Back to Home</Link>
       

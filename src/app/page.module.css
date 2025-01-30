@@ -1,0 +1,9 @@
+.homePage {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.siteTag {
+  text-align: center;
+}
