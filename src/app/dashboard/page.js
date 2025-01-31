@@ -117,6 +117,8 @@ function Dashboard() {
                 <th>Status</th>
                 <th>Likes</th>
                 <th>Dislikes</th>
+                <th>Edit</th>
+                <th>Delete</th>
               </tr>
             </thead>
             <tbody>
@@ -126,6 +128,12 @@ function Dashboard() {
                   <td>{post.status}</td>
                   <td>{post.likes}</td>
                   <td>{post.dislikes}</td>
+                  <td>
+                    <Link href={`/edit-post/${post.id}`}>
+                      <button className={styles.postsButton}>Edit</button>
+                    </Link>
+                  </td>
+                  <td><button className={styles.postsButton}>Delete</button></td>
                 </tr>
               ))}
             </tbody>
