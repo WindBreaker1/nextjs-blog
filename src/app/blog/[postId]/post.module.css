@@ -1,0 +1,40 @@
+.post {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  gap: 10px;
+}
+
+.metadata {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background-color: #2f2f2f;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.divider {
+  background-color: #4d4d4d;
+  border: 0;
+  border-radius: 10px;
+  height: 3px;
+}
+
+.tagsContainer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.tag {
+  padding: 5px 10px;
+  background: #0d5700;
+  border-radius: 5px;
+}
+
+.returnButton {
+  width: 100px;
+  border-radius: 5px;
+}

@@ -3,6 +3,7 @@
 import { useState, useEffect, use } from 'react';
 import Link from 'next/link';
 import { marked } from 'marked';
+import styles from './post.module.css';
 
 export default function PostPage({ params: paramsPromise }) {
   const [post, setPost] = useState(null);
@@ -46,31 +47,44 @@ export default function PostPage({ params: paramsPromise }) {
     );
   }
 
+  // format date
+  const formatDate = (isoString) => {
+    return new Intl.DateTimeFormat("en-US", { year: "numeric", month: "long", day: "numeric" }).format(new Date(isoString));
+  };
+
   // Convert the Markdown content to HTML
   const contentHtml = marked(post.content);
 
   return (
-    <div className='blog-post'>
+    <div className={styles.post}>
       <h1>{post.title}</h1>
-      <p>Author: {post.author}</p>
-      <p>Created at: {post.created_at}</p>
-      <p>Tags:</p>
-      <ul>
-        {tags.length > 0 ? (
-          tags.map((tag, index) => <li key={index}>{tag.name}</li>)
-        ) : (
-          <li>No tags found for this post.</li>
-        )}
-      </ul>
+      <div className={styles.metadata}>
+        <p>Author: {post.author}</p>
+        <hr className={styles.divider}></hr>
+        <p>Created at: {formatDate(post.created_at)}</p>
+        <hr className={styles.divider}></hr>
+        <div className={styles.tagsContainer}>
+          Tags: 
+          {tags.length > 0 ? (
+            tags.map((tag, index) => <div key={index} className={styles.tag}>{tag.name}</div>)
+          ) : (
+            <div>No tags found for this post.</div>
+          )}
+        </div>
+      </div>
       <div
         className="post-content"
         dangerouslySetInnerHTML={{ __html: contentHtml }}
       />
-      <hr></hr>
-      <p>Likes: {post.likes}</p>
-      <p>Dislikes: {post.dislikes}</p>
-      <hr></hr>
-      <Link href="/blog">Back to Blog</Link>
+      <div className={styles.metadata}>
+        <p>Likes: {post.likes}</p>
+        <hr className={styles.divider}></hr>
+        <p>Dislikes: {post.dislikes}</p>
+        <hr className={styles.divider}></hr>
+        <Link href="/blog">
+          <button className={styles.returnButton}>Back to Blog</button>
+        </Link>
+      </div>
     </div>
   );
 }
