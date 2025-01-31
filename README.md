@@ -5,6 +5,7 @@ A full stack blog app using Next.js and MySql.
 ## To-Do's
 
 - [ ] Implement post privacy: public posts can be found by anybody, while private posts are just seen by the original user.
+- [ ] When a user deletes their account, delete their posts, as well.
 - [ ] Host the project on Hostinger to test if the Sql database works.
 - [ ] Make the tag system look and feel better in posts and creation.
 - [ ] Sanytize HTML content for Markdown renderer to avoid hacks.

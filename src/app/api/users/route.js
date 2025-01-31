@@ -43,11 +43,21 @@ export async function PUT(req) {
       });
     }
 
+    // Fetch the old username before updating
+    const [userResult] = await db.query("SELECT username FROM users WHERE id = ?", [userId]);
+    if (userResult.length === 0) {
+      return new Response(JSON.stringify({ error: "User not found" }), { status: 404 });
+    }
+    
+    const oldUsername = userResult[0].username;
+
     // Update the user data in the database
     await db.query(`UPDATE users SET ${field} = ? WHERE id = ?`, [value, userId]);
 
-    // Update the post data in the database
-    
+    // If the user updated their username, update all posts with the new username
+    if (field === "username") {
+      await db.query("UPDATE posts SET author = ? WHERE author = ?", [value, oldUsername]);
+    }
 
     return new Response(
       JSON.stringify({ field, message: `${field} updated successfully!` }),

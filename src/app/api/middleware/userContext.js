@@ -5,22 +5,6 @@ import { createContext, useContext, useEffect, useState } from "react";
 // Create the UserContext
 const UserContext = createContext();
 
-// Helper to decode token
-const decodeToken = (token) => {
-  try {
-    const tokenParts = token.split(".");
-    if (tokenParts.length === 3) {
-      const decodedPayload = JSON.parse(atob(tokenParts[1]));
-      return decodedPayload;
-    }
-    console.error("Invalid token format.");
-    return null;
-  } catch (error) {
-    console.error("Error decoding token:", error);
-    return null;
-  }
-};
-
 // Helper to get cookies by name
 const getCookie = (name) => {
   const value = `; ${document.cookie}`;
@@ -33,15 +17,45 @@ const getCookie = (name) => {
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
-  useEffect(() => {
+  async function fetchUser() {
     const token = getCookie("token");
     if (token) {
-      const decodedUser = decodeToken(token);
-      if (decodedUser) {
-        setUser(decodedUser);
+      try {
+        const response = await fetch("/api/users/me", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
+        if (response.ok) {
+          const userData = await response.json();
+          setUser(userData); // Set the latest user data
+        } else {
+          console.error("Failed to fetch user");
+          setUser(null);
+        }
+      } catch (error) {
+        console.error("Error fetching user:", error);
+        setUser(null);
       }
     }
+  }
+
+
+  useEffect(() => {
+    fetchUser();
   }, []);
+
+  const refreshUser = async () => {
+    const token = getCookie("token");
+    if (token) {
+      const response = await fetch("/api/users/me", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (response.ok) {
+        const updatedUser = await response.json();
+        setUser(updatedUser);
+      }
+    }
+  };
 
   // Provide user and logout function
   const logout = () => {
@@ -74,10 +88,9 @@ export const UserProvider = ({ children }) => {
       console.error("Failed to delete user:", errorData.error || "Unknown error");
     }
   }
-  
 
   return (
-    <UserContext.Provider value={{ user, logout, remove }}>
+    <UserContext.Provider value={{ user, setUser, refreshUser, logout, remove }}>
       {children}
     </UserContext.Provider>
   );

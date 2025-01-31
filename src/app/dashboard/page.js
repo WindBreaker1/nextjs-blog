@@ -7,57 +7,41 @@ import Modal from "@/components/modal/modal";
 import styles from './dashboard.module.css'
 
 function Dashboard() {
-  const { user, logout, remove } = useUser();
+  const { user, refreshUser, logout, remove } = useUser();
   const [ posts, setPosts ] = useState([])
   const [editingField, setEditingField] = useState(null);
   const [inputValue, setInputValue] = useState("");
 
-  async function fetchUserPosts() {
-    const token = document.cookie.split("token=")[1]; // Retrieve token from cookies
-  
-    const response = await fetch("/api/posts/user", {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-  
+  async function fetchPosts() {
+    if (!user?.username) return; // Wait until user data is available
+
+    const response = await fetch(`/api/posts/by-author?author=${user.username}`);
     if (response.ok) {
-      const results = await response.json();
-      setPosts(results)
-    } else {
-      console.error("Failed to fetch posts:", await response.json());
+      const data = await response.json();
+      setPosts(data);
     }
   }
   
   useEffect(() => {
-    fetchUserPosts();
-  }, [])
+    fetchPosts();
+  }, [user?.username]) // Refetch posts when/if the username changes
 
   const handleUpdate = async () => {
-    const token = document.cookie.split("token=")[1]; // Get token from cookies
-
-    const body = JSON.stringify({
-      field: editingField,
-      value: inputValue,
-    });
-
+    const token = document.cookie.split("token=")[1];
+  
     const res = await fetch("/api/users", {
       method: "PUT",
       headers: {
+        Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`, // Send token
       },
-      body,
+      body: JSON.stringify({ field: editingField, value: inputValue }),
     });
-
-    console.log("Token sent to backend:", token);
-
+  
     if (res.ok) {
-      const data = await res.json();
-      alert(`${data.field} updated successfully!`);
-      setEditingField(null); // Close edit mode
-      window.location.reload(); // Refresh the page to fetch updated data
+      alert(`${editingField} updated successfully!`);
+      setEditingField(null);
+      await refreshUser(); // Fetch the updated user data dynamically
     } else {
       alert("Failed to update. Please try again.");
     }
@@ -130,6 +114,7 @@ function Dashboard() {
             <thead>
               <tr>
                 <th>Name</th>
+                <th>Status</th>
                 <th>Likes</th>
                 <th>Dislikes</th>
               </tr>
@@ -138,6 +123,7 @@ function Dashboard() {
               {posts.map((post, index) => (
                 <tr key={index}>
                   <td><Link href={`/blog/${post.id}`}>{post.title}</Link></td>
+                  <td>{post.status}</td>
                   <td>{post.likes}</td>
                   <td>{post.dislikes}</td>
                 </tr>
