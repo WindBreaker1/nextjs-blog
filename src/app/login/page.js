@@ -37,7 +37,7 @@ const LoginPage = () => {
       <h1>Login</h1>
       <form className={styles.loginForm} onSubmit={handleLogin}>
         <input type='text' id='username' value={username} onChange={(e) => setUsername(e.target.value)} placeholder='Username' />
-        <input type='text' id='password' value={password} onChange={(e) => setPassword(e.target.value)} placeholder='Password' />
+        <input type='password' id='password' value={password} onChange={(e) => setPassword(e.target.value)} placeholder='Password' />
         <button type='submit'>Login</button>
       </form>
     </div>
