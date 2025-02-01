@@ -47,6 +47,27 @@ function Dashboard() {
     }
   };
 
+  async function handlePostDelete(postId) {
+    const token = document.cookie.split("token=")[1];
+  
+    const confirmDelete = confirm("Are you sure you want to delete this post?");
+    if (!confirmDelete) return;
+  
+    const res = await fetch(`/api/posts/${postId}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  
+    if (res.ok) {
+      alert("Post deleted successfully!");
+      setPosts(posts.filter(post => post.id !== postId)); // Remove from UI
+    } else {
+      alert("Failed to delete post.");
+    }
+  }
+
   const handleOpenModal = (field) => {
     setEditingField(field);
     setInputValue(user[field] || "");
@@ -129,11 +150,11 @@ function Dashboard() {
                   <td>{post.likes}</td>
                   <td>{post.dislikes}</td>
                   <td>
-                    <Link href={`/edit-post/${post.id}`}>
+                    <Link href={`/blog/edit-post/${post.id}`}>
                       <button className={styles.postsButton}>Edit</button>
                     </Link>
                   </td>
-                  <td><button className={styles.postsButton}>Delete</button></td>
+                  <td><button className={styles.postsButton} onClick={() => handlePostDelete(post.id)}>Delete</button></td>
                 </tr>
               ))}
             </tbody>

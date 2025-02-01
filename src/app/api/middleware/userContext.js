@@ -71,6 +71,10 @@ export const UserProvider = ({ children }) => {
       console.error("No token found");
       return;
     }
+
+    const confirmDelete = confirm("Are you sure you want to delete your account?");
+
+    if (!confirmDelete) return;
   
     const response = await fetch(`/api/users`, {
       method: "DELETE",

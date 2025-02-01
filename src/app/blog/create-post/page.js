@@ -2,9 +2,12 @@
 
 import Link from 'next/link';
 import { useState, useEffect } from 'react'
+import { useRouter } from "next/navigation";
 import { useUser } from '@/app/api/middleware/userContext';
 
 const CreatePost = () => {
+  const router = useRouter();
+
   const { user } = useUser();
   const [post, setPost] = useState(null);
   const [title, setTitle] = useState('');
@@ -44,6 +47,7 @@ const CreatePost = () => {
       setTags([])
       setContent('')
       setMessage('Post added succsessfully!');
+      router.push(`/dashboard`);
     }
   }
 
