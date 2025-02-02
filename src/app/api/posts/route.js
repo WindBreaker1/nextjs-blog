@@ -1,10 +1,12 @@
 import db from '@/app/api/lib/db.js';
 
+// Get public posts.
 export async function GET(req, res) {
   const [results] = await db.query('SELECT * FROM posts WHERE status = "public"');
   return new Response(JSON.stringify(results));
 }
 
+// Add a post to the database.
 export async function POST(req) {
   const { title, slug, author, status, tags, content } = await req.json();
   const [results] = await db.query('INSERT INTO posts (title, slug, author, status, content) VALUES (?, ?, ?, ?, ?)', [title, slug, author, status, content]);
@@ -47,7 +49,6 @@ export async function POST(req) {
 
   // Wait for all the tag associations to be created
   await Promise.all(postTagPromises);
-
 
   return new Response(JSON.stringify(results));
 }

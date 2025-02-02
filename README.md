@@ -19,7 +19,10 @@ A full stack blog app using Next.js and MySql.
 - [ ] Make the tag system look and feel better in posts and creation.
 - [ ] Sanytize HTML content for Markdown renderer to avoid hacks.
 - [ ] Rewrite code with more comments.
-- [ ] Figure out the best way to construct the URL for the posts (`/blog/id` or `/blog/slug`).
+- [ ] Figure out the best way to construct the URL for the posts.
+  - `/author/slug`
+  - `/create-post`
+  - `/edit-post/author/slug`
 
 ## Bugs
 
@@ -39,3 +42,8 @@ A full stack blog app using Next.js and MySql.
 - npm run build
 - pm2 restart nextjs-blog
 
+### Site References
+
+- https://www.reddit.com/
+- https://scp-wiki.wikidot.com/
+- https://fontawesome.com/
