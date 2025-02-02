@@ -10,14 +10,26 @@ const Header = () => {
 
   return (
     <header>
+
       {user ? (
         <div className={styles.header}>
-          <div className={styles.siteName}>NextJs Blog</div>
+          <Link href='/' className='noUnderline'>
+            <div className={styles.siteName}>📑blogly</div>
+          </Link>
           <nav className={styles.nav}>
-            <Link href='/'>Home</Link>
-            <Link href='/blog'>Blog</Link>
-            <Link href='/blog/create-post'>Create Post</Link>
-            <Link href='/dashboard'>
+            <Link href='/blog' className='noUnderline'>
+              <button className={styles.loginButton}>
+                <img src="./blog-solid.svg" className='svg' />
+                Blog
+              </button>
+            </Link>
+            <Link href='/blog/create-post' className='noUnderline'>
+              <button className={styles.loginButton}>
+                <img src="./pen-nib-solid.svg" className='svg' />
+                Create Post
+              </button>
+            </Link>
+            <Link href='/dashboard' className='noUnderline'>
               <div className={styles.userSnippet}>
                 <img className={styles.profilePicture} src={user.profile_picture}></img>
                 {user.username}
@@ -27,16 +39,31 @@ const Header = () => {
         </div>
       ) : (
         <div className={styles.header}>
-          <div className={styles.siteName}>NextJs Blog</div>
+          <Link href='/' className='noUnderline'>
+            <div className={styles.siteName}>📑blogly</div>
+          </Link>
           <nav className={styles.nav}>
-            <Link href='/'>Home</Link>
-            <Link href='/blog'>Blog</Link>
-            <Link href='/login'>Login</Link>
-            <Link href='/register'>Register</Link>
+            <Link href='/blog' className='noUnderline'>
+              <button className={styles.loginButton}>
+                <img src="./blog-solid.svg" className='svg' />
+                Blog
+              </button>
+            </Link>
+            <Link href='/login' className='noUnderline'>
+              <button className={styles.loginButton}>
+                <img src="./right-to-bracket-solid.svg" className='svg' />
+                Login
+              </button>
+            </Link>
+            <Link href='/register' className='noUnderline'>
+              <button className={styles.registerButton}>
+                <img src="./address-card-solid.svg" className='svg' />
+                Register
+              </button>
+            </Link>
           </nav>
         </div>
       )}
-
       
     </header>
   )

@@ -1,34 +1,44 @@
 "use client"
 
-import { useState } from 'react'
+import { useState } from 'react';
+import { useRouter } from "next/navigation";
 import Cookies from 'js-cookie';
 import styles from './login.module.css'
+import { useNotification } from '../api/middleware/notificationContext';
 
 const LoginPage = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const router = useRouter();
+  const { showNotification } = useNotification();
+
+  const [formData, setFormData] = useState({ username: "",  password: "" })
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
   
   const handleLogin = async (event) => {
     event.preventDefault();
 
+    const { username, password } = formData;
+
     const res = await fetch('/api/auth/login', {
       method: 'POST',
-      body: JSON.stringify({username, password}),
       headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({username, password}),
       credentials: "include",
     })
 
     const data = await res.json();
 
     if (res.ok) {
-      console.log('Login Successful!')
       Cookies.set('token', data.token, { expires: 7, path: '/' });
-      console.log(Cookies.get('token'));
-      window.location.href = "/dashboard";
-      setUsername('')
-      setPassword('')
+
+      showNotification("Registration successful!", "success");
+      setTimeout(() => {
+        window.location.href = "/dashboard";
+      }, 2000);
     } else {
-      console.error('Login failed: ', data.error);
+      showNotification(data.error || "Login failed", "error");
     }
   }
   
@@ -36,8 +46,8 @@ const LoginPage = () => {
     <div className={styles.loginPage}>
       <h1>Login</h1>
       <form className={styles.loginForm} onSubmit={handleLogin}>
-        <input type='text' id='username' value={username} onChange={(e) => setUsername(e.target.value)} placeholder='Username' />
-        <input type='password' id='password' value={password} onChange={(e) => setPassword(e.target.value)} placeholder='Password' />
+        <input type='text' name='username' onChange={handleChange} placeholder='Username' />
+        <input type='password' name='password' onChange={handleChange} placeholder='Password' />
         <button type='submit'>Login</button>
       </form>
     </div>

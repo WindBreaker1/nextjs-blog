@@ -1,33 +1,38 @@
 "use client"
 
-import { useState } from 'react'
-import styles from './register.module.css'
+import { useState } from 'react';
+import { useRouter } from "next/navigation";
+import styles from './register.module.css'          
+import { useNotification } from '../api/middleware/notificationContext';
 
 const RegisterPage = () => {
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const router = useRouter();
+  const { showNotification } = useNotification();
+
+  const [formData, setFormData] = useState({ username: "", email: "", password: "" })
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
   
   const handleRegister = async (event) => {
     event.preventDefault();
 
+    const { username, email, password } = formData;
+
     const res = await fetch('/api/auth/register', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: {'Content-Type': 'application/json' },
       body: JSON.stringify({username, email, password})
     })
 
     const data = await res.json();
 
     if (res.ok) {
-      console.log('Registration successful!', data)
-      setUsername('')
-      setEmail('')
-      setPassword('')
+      showNotification("Registration successful!", "success");
+      setTimeout(() => {router.push("/login")}, 2000);
     } else {
-      console.log('Registration unsuccessful!', data)
+      showNotification(data.error || "Registration failed", "error");
     }
   }
   
@@ -35,9 +40,10 @@ const RegisterPage = () => {
     <div className={styles.registerPage}>
       <h1>Register</h1>
       <form className={styles.registerForm} onSubmit={handleRegister}>
-        <input type='text' id='username' value={username} onChange={(e) => setUsername(e.target.value)} placeholder='Username' />
-        <input type='text' id='email' value={email} onChange={(e) => setEmail(e.target.value)} placeholder='Email' />
-        <input type='password' id='password' value={password} onChange={(e) => setPassword(e.target.value)} placeholder='Password' />
+        <input type='text' name='username' onChange={handleChange} placeholder='Username' />
+        <input type='email' name='email' onChange={handleChange} placeholder='Email' />
+        <input type='password' name='password' onChange={handleChange} placeholder='Password' />
+        <div>All fields are required.</div>
         <button type='submit'>Register</button>
       </form>
     </div>

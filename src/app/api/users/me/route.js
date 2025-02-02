@@ -1,25 +1,14 @@
 import db from "@/app/api/lib/db.js";
-import jwt from "jsonwebtoken";
-import dotenv from "dotenv";
-
-dotenv.config({ path: ".env.local" });
-
-const JWT_SECRET = process.env.MY_JWT_SECRET;
+import { verifyToken } from "../../middleware/auth";
 
 export async function GET(req) {
   try {
-    const authHeader = req.headers.get("authorization");
+    const decoded = verifyToken(req);
 
-    if (!authHeader || !authHeader.startsWith("Bearer ")) {
-      return new Response(
-        JSON.stringify({ error: "Unauthorized: Token not provided" }),
-        { status: 401 }
-      );
+    if (!decoded) {
+      return new Response(JSON.stringify({ error: "Unauthorized: Invalid or expired token" }), { status: 401 });
     }
 
-    // Decode token to get user ID
-    const token = authHeader.split(" ")[1];
-    const decoded = jwt.verify(token, JWT_SECRET);
     const userId = decoded.userId;
 
     // Fetch user from the database

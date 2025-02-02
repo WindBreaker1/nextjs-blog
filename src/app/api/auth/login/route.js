@@ -15,11 +15,22 @@ export async function POST(req) {
 
   const { username, password } = await req.json();
 
+  if (!username) {
+    return new Response(JSON.stringify({ error: "Username is required." }), { status: 400 });
+  }
+  if (!password) {
+    return new Response(JSON.stringify({ error: "Password is required." }), { status: 400 });
+  }
+
   const [users] = await db.query('SELECT * FROM users WHERE username = ?', [username]);
 
   const user = users[0];
 
   const isPasswordValid = await bcrypt.compare(password, user.password_hash);
+
+  if (!isPasswordValid) {
+    return new Response(JSON.stringify({ error: "Password is wrong." }), { status: 400 });
+  }
 
   const token = jwt.sign({
     userId: user.id,

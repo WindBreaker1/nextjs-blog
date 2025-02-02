@@ -1,0 +1,64 @@
+.notification {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background-color: #474747;
+  color: white;
+  padding: 12px 16px;
+  border-radius: 5px;
+  box-shadow: 0 2px 10px #00000033;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-width: 250px;
+  max-width: 350px;
+  animation: slideIn 0.2s ease-out, fadeOut 0.2s ease-out 4.9s forwards;
+}
+
+.error {
+  background-color: #c72e23; /* Red for errors */
+}
+
+.success {
+  background-color: #228625; /* Green for success */
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  color: white;
+  padding: 5px;
+  font-size: 20px;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.notification.hidden {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
+/* Keyframes for entry animation (sliding from top) */
+@keyframes slideIn {
+  0% {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Keyframes for exit animation (fade out and slide up) */
+@keyframes fadeOut {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-10px);
+    opacity: 0;
+  }
+}

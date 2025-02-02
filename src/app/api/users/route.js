@@ -1,10 +1,5 @@
 import db from '@/app/api/lib/db.js';
-import jwt from "jsonwebtoken"
-import dotenv from "dotenv"
-
-dotenv.config({ path: ".env.local"});
-
-const JWT_SECRET = process.env.MY_JWT_SECRET;
+import { verifyToken } from '../middleware/auth';
 
 export async function GET(req, res) {
   const [results] = await db.query('SELECT * FROM users');
@@ -19,19 +14,11 @@ export async function POST(req, res) {
 
 export async function PUT(req) {
   try {
-    const authHeader = req.headers.get("authorization");
-
-    // Check if the Authorization header exists
-    if (!authHeader || !authHeader.startsWith("Bearer ")) {
-      return new Response(
-        JSON.stringify({ error: "Unauthorized: Token not provided" }),
-        { status: 401 }
-      );
+    const decoded = verifyToken(req);
+    
+    if (!decoded) {
+      return new Response(JSON.stringify({ error: "Unauthorized: Invalid or expired token" }), { status: 401 });
     }
-
-    // Extract and verify the token
-    const token = authHeader.split(" ")[1];
-    const decoded = jwt.verify(token, JWT_SECRET);
 
     const userId = decoded.userId;
     const { field, value } = await req.json();
@@ -74,23 +61,17 @@ export async function PUT(req) {
 
 export async function DELETE(req) {
   try {
-    const authHeader = req.headers.get("authorization");
-
-    // Check if the Authorization header exists
-    if (!authHeader || !authHeader.startsWith("Bearer ")) {
-      return new Response(
-        JSON.stringify({ error: "Unauthorized: Token not provided" }),
-        { status: 401 }
-      );
+    const decoded = verifyToken(req);
+    
+    if (!decoded) {
+      return new Response(JSON.stringify({ error: "Unauthorized: Invalid or expired token" }), { status: 401 });
     }
 
-    // Extract and verify the token
-    const token = authHeader.split(" ")[1];
-    const decoded = jwt.verify(token, JWT_SECRET);
-
     const userId = decoded.userId;
+    const author = decoded.username;
 
-    await db.query('DELETE FROM users WHERE id = ?', [userId])
+    await db.query('DELETE FROM users WHERE id = ?', [userId]);
+    await db.query('DELETE FROM posts WHERE author = ?', [author]);
 
     return new Response(JSON.stringify('User deleted succesfully!'), { status: 200 })
   } catch (error) {

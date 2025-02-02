@@ -2,11 +2,20 @@
 
 A full stack blog app using Next.js and MySql.
 
+## Features
+
+- 
+
 ## To-Do's
 
-- [ ] Implement post privacy: public posts can be found by anybody, while private posts are just seen by the original user.
-- [ ] When a user deletes their account, delete their posts, as well.
-- [ ] Host the project on Hostinger to test if the Sql database works.
+- [x] Implement post privacy: public posts can be found by anybody, while private posts are just seen by the original user.
+- [ ] When a user deletes their account, delete their posts and comments, as well.
+- [ ] Let users import markdown files to create posts.
+- [ ] Implement a 'show password' toggle for password inputs.
+- [ ] Add cookies consent notification.
+- [x] Host the project on Hostinger to test if the Sql database works.
+- [x] Change favicon.
+- [ ] Cookies notification.
 - [ ] Make the tag system look and feel better in posts and creation.
 - [ ] Sanytize HTML content for Markdown renderer to avoid hacks.
 - [ ] Rewrite code with more comments.
@@ -21,4 +30,12 @@ A full stack blog app using Next.js and MySql.
 
 - run the dev server with `npm run dev`
 - consider Vercel for deployment
-- user schema: id, username, email, password_hash, profile_picture, banner_picture, description, created_at, last_edited_at
+
+### Deployment:
+
+- cd nextjs-blog
+- git pull origin main
+- npm install (if new dependencies)
+- npm run build
+- pm2 restart nextjs-blog
+

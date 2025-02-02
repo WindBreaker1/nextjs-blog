@@ -1,6 +1,7 @@
 import { Geist, Geist_Mono, Roboto} from "next/font/google";
 import "./globals.css";
 import { UserProvider } from "./api/middleware/userContext";
+import { NotificationProvider } from "./api/middleware/notificationContext";
 import Header from "@/components/header/header";
 
 // Fonts //
@@ -26,6 +27,9 @@ const geistMono = Geist_Mono({
 export const metadata = {
   title: "Blogly",
   description: "Quirky, fullstack, blog app.",
+  icons: {
+    icon: "/favicon.ico",
+  },
 };
 
 // App //
@@ -35,8 +39,10 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} ${roboto.variable}`}>
         <UserProvider>
-          <Header />
-          {children}
+          <NotificationProvider>
+            <Header />
+            {children}
+          </NotificationProvider>
         </UserProvider>
       </body>
     </html>

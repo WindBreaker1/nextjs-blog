@@ -7,6 +7,7 @@
 
 .siteName {
   font-size: 1.5rem;
+  color: #ffffff;
 }
 
 .nav {
@@ -15,14 +16,42 @@
   gap: 10px;
 }
 
+.loginButton {
+  padding: 10px;
+  border-radius: 25px;
+  background-color: #414141;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.loginButton:hover {
+  background-color: #252525;
+}
+
+.registerButton {
+  padding: 10px;
+  border-radius: 25px;
+  background-color: #055f00;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.registerButton:hover {
+  background-color: #044d00;
+  text-decoration:dashed;
+}
+
 .userSnippet {
   display: flex;
   flex-direction: row;
   align-items: center;
   padding: 5px;
   gap: 5px;
-  border: 2px solid #464646;
+  border: 2px solid #333333;
   border-radius: 5px;
+  color: #fff;
 }
 
 .userSnippet:hover {
