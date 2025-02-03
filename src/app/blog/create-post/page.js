@@ -4,9 +4,11 @@ import Link from 'next/link';
 import { useState, useEffect } from 'react'
 import { useRouter } from "next/navigation";
 import { useUser } from '@/app/api/middleware/userContext';
+import { useNotification } from '@/app/api/middleware/notificationContext';
 
 const CreatePost = () => {
   const router = useRouter();
+  const { showNotification } = useNotification();
 
   const { user } = useUser();
   const [post, setPost] = useState(null);
@@ -17,13 +19,30 @@ const CreatePost = () => {
   const [tagsInput, setTagsInput] = useState('');
   const [tags, setTags] = useState([]);
   const [content, setContent] = useState('');
-  const [message, setMessage] = useState('');
 
   useEffect(() => {
     if (user && user.username) {
       setAuthor(user.username);
     }
   }, [user])
+
+  const handleFileImport = (e) => {
+    // Get the first selected file
+    const file = e.target.files[0];
+    if (!file) return;
+
+    // Create a new FileReader instance
+    const reader = new FileReader();
+
+    // Define what happens when reading is successful
+    reader.onload = (event) => {
+      // Update the state with the file contents
+      setContent(event.target.result);
+    };
+
+    // Read the file as text (assuming it's a text-based Markdown file)
+    reader.readAsText(file);
+  }
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -46,18 +65,17 @@ const CreatePost = () => {
       setTagsInput('')
       setTags([])
       setContent('')
-      setMessage('Post added succsessfully!');
-      router.push(`/dashboard`);
+      
+      showNotification("Post created successfully!", "success");
+      setTimeout(() => {
+        window.location.href = "/dashboard";
+      }, 2000);
     }
   }
 
   return (
     <div className='page'>
       <h1>Create Your Post!</h1>
-
-      <br></br>
-
-      {message && <p>{message}</p>}
 
       <br></br>
 
@@ -71,6 +89,7 @@ const CreatePost = () => {
           <option value='private'>Private</option>
         </select>
         <input type='text' id='tags' value={tagsInput} onChange={(e) => setTagsInput(e.target.value)} placeholder='Tags' />
+        <input type="file" accept=".md" className='file-input' onChange={handleFileImport}/>
         <textarea id="content" value={content} onChange={(e) => setContent(e.target.value)} placeholder='Content' />
         <button type='submit'>Add Post</button>
       </form>

@@ -18,7 +18,6 @@ A full stack blog app using Next.js and MySql.
 - [ ] Cookies notification.
 - [ ] Make the tag system look and feel better in posts and creation.
 - [ ] Sanytize HTML content for Markdown renderer to avoid hacks.
-- [ ] Rewrite code with more comments.
 - [ ] Figure out the best way to construct the URL for the posts.
   - `/author/slug`
   - `/create-post`

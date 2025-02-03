@@ -130,6 +130,12 @@ code {
   width: 15px;
 }
 
+.file-input {
+  background-color: #242424;
+  cursor: pointer;
+  max-width: fit-content;
+}
+
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;
