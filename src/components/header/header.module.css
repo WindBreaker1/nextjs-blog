@@ -18,7 +18,7 @@
 
 .loginButton {
   padding: 10px;
-  border-radius: 25px;
+  border-radius: 10px;
   background-color: #414141;
   display: flex;
   align-items: center;
@@ -31,7 +31,7 @@
 
 .registerButton {
   padding: 10px;
-  border-radius: 25px;
+  border-radius: 10px;
   background-color: #055f00;
   display: flex;
   align-items: center;

@@ -14,6 +14,7 @@ const CreatePost = () => {
   const [post, setPost] = useState(null);
   const [title, setTitle] = useState('');
   const [slug, setSlug] = useState('');
+  const [thumbnail, setThumbnail] = useState('');
   const [author, setAuthor] = useState('');
   const [status, setStatus] = useState('');
   const [tagsInput, setTagsInput] = useState('');
@@ -54,13 +55,14 @@ const CreatePost = () => {
 
     const res = await fetch('/api/posts', {
       method: 'POST', 
-      body: JSON.stringify({ title, slug, author, status, tags: formattedTags, content }),
+      body: JSON.stringify({ title, slug, author, thumbnail, status, tags: formattedTags, content }),
     })
 
     if (res.ok) {
       setTitle('')
       setSlug('')
       setAuthor('')
+      setThumbnail('')
       setStatus('')
       setTagsInput('')
       setTags([])
@@ -83,6 +85,7 @@ const CreatePost = () => {
         <input type='text' id='title' value={title} onChange={(e) => setTitle(e.target.value)} placeholder='Title' />
         <input type='text' id='slug' value={slug} onChange={(e) => setSlug(e.target.value)} placeholder='Slug' />
         <input type='text' id='author' value={author} disabled placeholder='Author' />
+        <input type='text' id='thumbnail' value={thumbnail} onChange={(e) => setThumbnail(e.target.value)} placeholder='Thumnail Url' />
         <select id='status' value={status} onChange={(e) => setStatus(e.target.value)}>
           <option value="" disabled defaultValue=''>Select an option</option>
           <option value='public'>Public</option>

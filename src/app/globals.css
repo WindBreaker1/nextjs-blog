@@ -49,9 +49,26 @@ a:hover {
 }
 
 button {
-  cursor: pointer;
+  border-radius: 10px;
   border: none;
-  height: 40px;
+  padding: 0.8rem 1.2rem;
+  font-size: 1rem;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #3a3a3a;
+  cursor: pointer;
+  transition: transform 0.2s, background-color 0.2s;
+}
+button:hover {
+  transform: scale(1.05);
+  background-color: #4b4b4b;
+}
+
+hr {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 table {
@@ -99,6 +116,7 @@ textarea {
 
 blockquote {
   background-color: #363636;
+  border-left: 5px solid #919191;
   padding: 10px;
   border-radius: 5px;
 }
@@ -130,10 +148,28 @@ code {
   width: 15px;
 }
 
+.profile-picture {
+  max-width: 50px;
+  max-height: 50px;
+  border-radius: 50%;
+}
+
+.profile-picture-small {
+  max-width: 35px;
+  max-height: 35px;
+  border-radius: 50%;
+}
+
 .file-input {
   background-color: #242424;
   cursor: pointer;
   max-width: fit-content;
+}
+
+.flexbox {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 @media (prefers-color-scheme: dark) {
