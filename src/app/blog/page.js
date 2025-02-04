@@ -43,7 +43,7 @@ const Blog = () => {
         {posts.map((post, index) => 
           <PostContainer 
             key={index} 
-            url={`/blog/${post.id}`} 
+            url={`/${post.author}/${post.slug}`} 
             thumbnail={post.thumbnail} 
             title={post.title} 
             author={post.author} 
