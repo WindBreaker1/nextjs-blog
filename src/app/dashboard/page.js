@@ -47,13 +47,13 @@ function Dashboard() {
     }
   };
 
-  async function handlePostDelete(postId) {
+  async function handlePostDelete(author, slug) {
     const token = document.cookie.split("token=")[1];
   
     const confirmDelete = confirm("Are you sure you want to delete this post?");
     if (!confirmDelete) return;
   
-    const res = await fetch(`/api/posts/${postId}`, {
+    const res = await fetch(`/api/posts/${author}/${slug}`, {
       method: "DELETE",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -62,7 +62,7 @@ function Dashboard() {
   
     if (res.ok) {
       alert("Post deleted successfully!");
-      setPosts(posts.filter(post => post.id !== postId)); // Remove from UI
+      setPosts(posts.filter(post => post.slug !== slug));
     } else {
       alert("Failed to delete post.");
     }
@@ -154,7 +154,7 @@ function Dashboard() {
                       <button className={styles.postsButton}>Edit</button>
                     </Link>
                   </td>
-                  <td><button className={styles.postsButton} onClick={() => handlePostDelete(post.id)}>Delete</button></td>
+                  <td><button className={styles.postsButton} onClick={() => handlePostDelete(post.author, post.slug)}>Delete</button></td>
                 </tr>
               ))}
             </tbody>
