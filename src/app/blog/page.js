@@ -47,7 +47,7 @@ const Blog = () => {
             thumbnail={post.thumbnail} 
             title={post.title} 
             author={post.author} 
-            authorPFP={user?.profile_picture}
+            authorPFP={post.authorPFP ?? "./default-avatar.jpg"}
             content={marked(post.content, {renderer: imagelessRenderer})} 
             likes={post.likes}
             dislikes={post.dislikes}

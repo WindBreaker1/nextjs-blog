@@ -1,8 +1,14 @@
 import db from '@/app/api/lib/db.js';
 
 // Get public posts.
-export async function GET(req, res) {
-  const [results] = await db.query('SELECT * FROM posts WHERE status = "public" ORDER BY id DESC');
+export async function GET() {
+  const [results] = await db.query(`
+    SELECT posts.*, COALESCE(users.profile_picture, './default-avatar.jpg') AS authorPFP 
+      FROM posts 
+      LEFT JOIN users ON posts.author = users.username
+      WHERE posts.status = "public" 
+      ORDER BY posts.id DESC
+  `);
   return new Response(JSON.stringify(results));
 }
 
