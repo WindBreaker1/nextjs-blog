@@ -8,18 +8,19 @@ A full stack blog app using Next.js and MySql.
 
 ## To-Do's
 
-- [x] Implement post privacy: public posts can be found by anybody, while private posts are just seen by the original user.
+- [ ] Add comments.
+- [ ] Add the ability to like and dislike posts and comments.
 - [ ] When a user deletes their account, delete their posts and comments, as well.
 - [ ] Let users import markdown files to create posts.
 - [ ] Add smart links.
 - [ ] Implement a 'show password' toggle for password inputs.
 - [ ] Add cookies consent notification.
-- [x] Host the project on Hostinger to test if the Sql database works.
-- [x] Change favicon.
-- [ ] Cookies notification.
 - [ ] Make the tag system look and feel better in posts and creation.
 - [ ] Sanytize HTML content for Markdown renderer to avoid hacks.
-- [ ] Figure out the best way to construct the URL for the posts.
+- [x] Implement post privacy: public posts can be found by anybody, while private posts are just seen by the original user.
+- [x] Host the project on Hostinger to test if the Sql database works.
+- [x] Change favicon.
+- [x] Figure out the best way to construct the URL for the posts.
   - `/author/slug`
   - `/create-post`
   - `/edit-post/author/slug`
