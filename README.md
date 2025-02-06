@@ -10,6 +10,7 @@ A full stack blog app using Next.js and MySql.
 
 - [ ] Add comments.
 - [ ] Add the ability to like and dislike posts and comments.
+- [ ] Add the ability to post reactions to posts and comments.
 - [ ] When a user deletes their account, delete their posts and comments, as well.
 - [ ] Let users import markdown files to create posts.
 - [ ] Add smart links.
