@@ -19,6 +19,7 @@ A full stack blog app using Next.js and MySql.
 - [ ] Add cookies consent notification.
 - [ ] Make the tag system look and feel better in posts and creation.
 - [ ] Sanytize HTML content for Markdown renderer to avoid hacks.
+- [ ] Add notifications to other things when the user accesses them, like their dashboard.
 - [x] Implement post privacy: public posts can be found by anybody, while private posts are just seen by the original user.
 - [x] Host the project on Hostinger to test if the Sql database works.
 - [x] Change favicon.
