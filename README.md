@@ -20,6 +20,7 @@ A full stack blog app using Next.js and MySql.
 - [ ] Make the tag system look and feel better in posts and creation.
 - [ ] Sanytize HTML content for Markdown renderer to avoid hacks.
 - [ ] Add notifications to other things when the user accesses them, like their dashboard.
+- [ ] Add the ability for users to customize CSS to make their pages look however they want.
 - [x] Implement post privacy: public posts can be found by anybody, while private posts are just seen by the original user.
 - [x] Host the project on Hostinger to test if the Sql database works.
 - [x] Change favicon.
@@ -36,7 +37,6 @@ A full stack blog app using Next.js and MySql.
 ## Info
 
 - run the dev server with `npm run dev`
-- consider Vercel for deployment
 
 ### Deployment (updates):
 
