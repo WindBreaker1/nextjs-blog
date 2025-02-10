@@ -21,6 +21,7 @@ A full stack blog app using Next.js and MySql.
 - [ ] Sanytize HTML content for Markdown renderer to avoid hacks.
 - [ ] Add notifications to other things when the user accesses them, like their dashboard.
 - [ ] Add the ability for users to customize CSS to make their pages look however they want.
+- [ ] Make a better markdown writing interface.
 - [x] Implement post privacy: public posts can be found by anybody, while private posts are just seen by the original user.
 - [x] Host the project on Hostinger to test if the Sql database works.
 - [x] Change favicon.
