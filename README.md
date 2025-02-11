@@ -8,7 +8,7 @@ A full stack blog app using Next.js and MySql.
 
 ## To-Do's
 
-- [ ] Add comments.
+- [ ] Add the ability for users to post comments on posts.
 - [ ] Add a user page where everybody can see a user's posts.
 - [ ] Add the ability to like and dislike posts and comments.
 - [ ] Add the ability to post reactions to posts and comments.
