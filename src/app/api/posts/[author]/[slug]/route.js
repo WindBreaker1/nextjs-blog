@@ -2,7 +2,7 @@ import db from "@/app/api/lib/db";
 import { verifyToken } from "@/app/api/middleware/auth";
 
 export async function GET(req, { params }) {
-  const { author, slug } = params;
+  const { author, slug } = await params;
 
   const [rows] = await db.query(
     "SELECT * FROM posts WHERE author = ? AND slug = ? LIMIT 1",

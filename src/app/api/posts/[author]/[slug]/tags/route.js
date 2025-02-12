@@ -1,7 +1,7 @@
 import db from '@/app/api/lib/db';
 
 export async function GET(req, { params }) {
-  const { author, slug } = params;
+  const { author, slug } = await params;
 
   try {
     const [tags] = await db.query(

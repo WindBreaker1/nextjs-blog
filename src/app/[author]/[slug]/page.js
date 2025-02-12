@@ -3,6 +3,7 @@
 import { useState, useEffect, use } from "react";
 import Link from "next/link";
 import { marked } from "marked";
+import DOMPurify from 'dompurify';
 import styles from "./post.module.css";
 
 export default function PostPage({ params: paramsPromise }) {
@@ -66,6 +67,59 @@ export default function PostPage({ params: paramsPromise }) {
 
   // markdown settings
 
+  renderer.image = (href, title, text) => {
+    if (typeof href === 'object' && href !== null) {
+      ({ href, text, title } = href); // Extract `href`, `text`, `title`, and `raw` from the object
+    }
+
+    // Default behavior: Render the image as usual
+    let imageHTML = `<img src="${href}" alt="${text}"`;
+  
+    // Check if size is included in the image alt text (like image|200)
+    const regex = /(.+)\|(\d+)/; // Regex to match `image|200`
+    const match = text.match(regex);
+  
+    if (match) {
+      // Extract width from the alt text
+      const width = match[2];
+      // Add width style to the image
+      imageHTML += ` style="width: ${width}px;"`;
+    }
+  
+    imageHTML += '>';
+    return imageHTML;
+  };
+
+  renderer.blockquote = (quote, raw, text) => {
+    // Check for specific syntax in the blockquote
+    let colorClass = 'normal'; // Default color class
+
+    console.log(quote);
+    console.log(raw);
+    console.log(text);
+
+    if (typeof quote === "object" && quote !== null) {
+      ({ text: quote, raw } = quote); // Extract `text` (quote) and `raw` content
+    } 
+  
+    if (quote.startsWith('[!NOTE]')) {
+      colorClass = 'note';
+      // Remove the [!NOTE] syntax from the blockquote text
+      quote = quote.replace('[!NOTE]', '').trim();
+    } else if (quote.startsWith('[!IMPORTANT]')) {
+      colorClass = 'important';
+      // Remove the [!IMPORTANT] syntax from the blockquote text
+      quote = quote.replace('[!IMPORTANT]', '').trim();
+    } else if (quote.startsWith('[!WARNING]')) {
+      colorClass = 'warning';
+      // Remove the [!WARNING] syntax from the blockquote text
+      quote = quote.replace('[!WARNING]', '').trim();
+    }
+  
+    // Return the blockquote with a dynamic class based on the title
+    return `<blockquote class="${colorClass}">${quote}</blockquote>`;
+  };
+
   renderer.link = (href, title, text) => {
 
     console.log("Href:", href); // Debugging
@@ -102,8 +156,23 @@ export default function PostPage({ params: paramsPromise }) {
     return `<a href="${encodeURI(href)}" target="_blank" rel="noopener noreferrer">${text || href}</a>`;
   }; 
 
+  // dom purify
+
+  const cleanContent = (inputHtml) => {
+    return DOMPurify.sanitize(inputHtml, {
+      ALLOWED_TAGS: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'code', 'a', 'b', 'i', 'em', 'strong', 'ul', 'li', 'ol', 'p', 'img', 'iframe', 'audio', 'video', 'br', 'hr', 'table', 'tr', 'td', 'th', 'blockquote'],
+      ALLOWED_ATTR: ['href', 'src', 'title', 'alt', 'width', 'height', 'frameborder', 'allow'], // Allow necessary iframe attributes
+    });
+  };
+
+  marked.setOptions({
+    renderer: renderer,
+    gfm: true, // Enable GitHub Flavored Markdown (GFM)
+    breaks: true, // Breaks on new lines
+  });
+
   // Convert Markdown to HTML
-  const contentHtml = marked(post.content, { renderer: renderer });
+  const contentHtml = cleanContent(marked(post.content));
 
   return (
     <div className={styles.post}>
