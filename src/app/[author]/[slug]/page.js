@@ -6,6 +6,8 @@ import { marked } from "marked";
 import styles from "./post.module.css";
 
 export default function PostPage({ params: paramsPromise }) {
+  const renderer = new marked.Renderer();
+
   const params = use(paramsPromise); // ✅ Unwrap params correctly
   let { author, slug } = params;
 
@@ -62,8 +64,46 @@ export default function PostPage({ params: paramsPromise }) {
     }).format(new Date(isoString));
   };
 
+  // markdown settings
+
+  renderer.link = (href, title, text) => {
+
+    console.log("Href:", href); // Debugging
+    console.log("Title:", title);
+    console.log("Text:", text); // Debugging
+  
+    if (typeof href === "object" && href !== null) {
+      ({ href, title, text } = href); // Extract properties
+    }
+  
+    if (!href || typeof href !== "string") return text || "";
+    
+    if (href && (href.endsWith('.mp3') || href.endsWith('.ogg') || href.endsWith('.wav'))) {
+      return `<audio controls>
+                <source src="${href}" type="audio/mp3">
+                Your browser does not support the audio element.
+              </audio>`;
+    }
+  
+    // Check if it's a SoundCloud link
+    if (text.includes("soundcloud")) {
+      return `<iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay"
+          src="https://w.soundcloud.com/player/?url=${encodeURIComponent(href)}">
+        </iframe>`;
+    }
+
+    if (text.includes("youtube")) {
+      const videoId = href.split("v=")[1]?.split("&")[0] || href.split("/").pop();
+      if (videoId) {
+        return `<iframe width="100%" height="315" src="https://www.youtube.com/embed/${videoId}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+      }
+    }
+
+    return `<a href="${encodeURI(href)}" target="_blank" rel="noopener noreferrer">${text || href}</a>`;
+  }; 
+
   // Convert Markdown to HTML
-  const contentHtml = marked(post.content);
+  const contentHtml = marked(post.content, { renderer: renderer });
 
   return (
     <div className={styles.post}>
