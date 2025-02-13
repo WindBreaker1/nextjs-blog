@@ -160,8 +160,8 @@ export default function PostPage({ params: paramsPromise }) {
 
   const cleanContent = (inputHtml) => {
     return DOMPurify.sanitize(inputHtml, {
-      ALLOWED_TAGS: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'code', 'a', 'b', 'i', 'em', 'strong', 'ul', 'li', 'ol', 'p', 'img', 'iframe', 'audio', 'video', 'br', 'hr', 'table', 'tr', 'td', 'th', 'blockquote'],
-      ALLOWED_ATTR: ['href', 'src', 'title', 'alt', 'width', 'height', 'frameborder', 'allow'], // Allow necessary iframe attributes
+      
+      
     });
   };
 
@@ -172,7 +172,9 @@ export default function PostPage({ params: paramsPromise }) {
   });
 
   // Convert Markdown to HTML
-  const contentHtml = cleanContent(marked(post.content));
+  
+  // const contentHtml = cleanContent(marked(post.content));
+  const contentHtml = marked(post.content);
 
   return (
     <div className={styles.post}>

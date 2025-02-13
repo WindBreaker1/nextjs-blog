@@ -6,7 +6,7 @@ const Modal = ({ field, value, onClose, onSave, onInputChange }) => {
     <div className={styles.modalBackdrop}>
       <div className={styles.modalContent}>
         <h2>Edit {field}</h2>
-        <input
+        <textarea
           type="text"
           value={value}
           onChange={onInputChange}
