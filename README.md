@@ -1,6 +1,6 @@
 # Fullstack Blog App
 
-A full stack blog app using Next.js and MySql.
+A full stack blog app made with Next.js and MySql.
 
 ## Features
 
