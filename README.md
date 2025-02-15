@@ -19,6 +19,7 @@ A full stack blog app made with Next.js and MySql.
 - [ ] Add cookies consent notification.
 - [ ] Make the tag system look and feel better in posts and creation.
 - [ ] Sanytize HTML content for Markdown renderer to avoid hacks.
+  - [ ] Add each type of HTML tag on the list of allowed tags.
 - [ ] Add notifications to   other things when the user accesses them, like their dashboard.
 - [ ] Add the ability for users to customize CSS to make their pages look however they want.
 - [ ] Make a better markdown writing interface.
