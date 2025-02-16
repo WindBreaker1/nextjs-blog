@@ -18,6 +18,7 @@ A full stack blog app made with Next.js and MySql.
 - [ ] Implement a 'show password' toggle for password inputs.
 - [ ] Add cookies consent notification.
 - [ ] Make the tag system look and feel better in posts and creation.
+- [ ] Make a sidebar.
 - [ ] Sanytize HTML content for Markdown renderer to avoid hacks.
   - [ ] Add each type of HTML tag on the list of allowed tags.
 - [ ] Add notifications to   other things when the user accesses them, like their dashboard.
