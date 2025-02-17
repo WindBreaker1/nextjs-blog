@@ -10,6 +10,7 @@ A full stack blog app made with Next.js and MySql.
 
 - [ ] Add the ability for users to post comments on posts.
 - [ ] Add a user page where everybody can see a user's posts.
+- [ ] Add customization options for the user page.
 - [ ] Add the ability to like and dislike posts and comments.
 - [ ] Add the ability to post reactions to posts and comments.
 - [ ] When a user deletes their account, delete their posts and comments, as well.
