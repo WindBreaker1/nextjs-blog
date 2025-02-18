@@ -15,7 +15,7 @@ A full stack blog app made with Next.js and MySql.
 - [ ] Add the ability to post reactions to posts and comments.
 - [ ] When a user deletes their account, delete their posts and comments, as well.
 - [ ] Let users import markdown files to create posts.
-- [ ] Add smart links.
+- [ ] Add smart links, meaning it should fetch an image and site icon inside of a blockquote.
 - [ ] Implement a 'show password' toggle for password inputs.
 - [ ] Add cookies consent notification.
 - [ ] Make the tag system look and feel better in posts and creation.
