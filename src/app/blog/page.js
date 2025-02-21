@@ -68,7 +68,7 @@ const Blog = () => {
         <tbody>
           {posts.map((post, index) => (
             <tr key={index}>
-              <td><Link href={`/blog/${post.id}`}>{post.title}</Link></td>
+              <td><Link href={`/${post.author}/${post.slug}`}>{post.title}</Link></td>
               <td>{post.author}</td>
               <td>{post.likes}</td>
             </tr>

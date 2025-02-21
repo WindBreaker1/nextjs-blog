@@ -9,6 +9,8 @@ const RegisterPage = () => {
   const router = useRouter();
   const { showNotification } = useNotification();
 
+  const [showPassword, setShowPassword] = useState(false);
+
   const [formData, setFormData] = useState({ username: "", email: "", password: "" })
 
   const handleChange = (e) => {
@@ -42,7 +44,10 @@ const RegisterPage = () => {
       <form className={styles.registerForm} onSubmit={handleRegister}>
         <input type='text' name='username' onChange={handleChange} placeholder='Username' />
         <input type='email' name='email' onChange={handleChange} placeholder='Email' />
-        <input type='password' name='password' onChange={handleChange} placeholder='Password' />
+        <div className={styles.passwordInput}>
+          <input type={showPassword ? "text" : "password"} name='password' onChange={handleChange} placeholder='Password' />
+          <button type='button' onClick={() => setShowPassword(!showPassword)}>{showPassword ? "Hide": "Show"} Password</button>
+        </div>
         <div>All fields are required.</div>
         <button type='submit'>Register</button>
       </form>

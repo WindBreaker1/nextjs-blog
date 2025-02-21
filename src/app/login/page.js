@@ -9,8 +9,10 @@ import { useNotification } from '../api/middleware/notificationContext';
 const LoginPage = () => {
   const router = useRouter();
   const { showNotification } = useNotification();
+  
+  const [formData, setFormData] = useState({ username: "",  password: "" });
 
-  const [formData, setFormData] = useState({ username: "",  password: "" })
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -47,7 +49,10 @@ const LoginPage = () => {
       <h1>Login</h1>
       <form className={styles.loginForm} onSubmit={handleLogin}>
         <input type='text' name='username' onChange={handleChange} placeholder='Username' />
-        <input type='password' name='password' onChange={handleChange} placeholder='Password' />
+        <div className={styles.passwordInput}>
+          <input type={showPassword ? "text" : "password"} name='password' onChange={handleChange} placeholder='Password' />
+          <button type='button' onClick={() => setShowPassword(!showPassword)}>{showPassword ? "Hide": "Show"} Password</button>
+        </div>
         <button type='submit'>Login</button>
       </form>
     </div>

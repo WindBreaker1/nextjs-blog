@@ -4,12 +4,43 @@
   align-items: center;
   justify-content: center;
   gap: 50px;
-  padding: 50px;
 }
 
 .registerForm {
   background-color: #303030;
   border-radius: 25px;
   padding: 50px;
-  min-width: 500px;
+  width: 500px;
+}
+
+.passwordInput {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 5px;
+}
+
+.passwordInput input {
+  flex-grow: 1; /* Allows the input to take all available space */
+  min-width: 0; /* Prevents flexbox shrinking issues */
+}
+
+.passwordInput button {
+  flex-shrink: 0; /* Prevents the button from shrinking */
+  white-space: nowrap;
+}
+
+@media screen and (max-width: 525px) {
+  .registerPage {
+    padding: 0 10px 0 10px;
+  }
+  
+  .register Form {
+    width: 100%;
+  }
+
+  .passwordInput {
+    flex-direction: column;
+    gap: 10px;
+  }
 }
