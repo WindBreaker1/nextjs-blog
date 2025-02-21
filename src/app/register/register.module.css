@@ -28,6 +28,8 @@
 .passwordInput button {
   flex-shrink: 0; /* Prevents the button from shrinking */
   white-space: nowrap;
+  border-radius: 1px;
+  border: 1px solid #808080;
 }
 
 @media screen and (max-width: 525px) {
@@ -35,7 +37,7 @@
     padding: 0 10px 0 10px;
   }
   
-  .register Form {
+  .registerForm {
     width: 100%;
   }
 

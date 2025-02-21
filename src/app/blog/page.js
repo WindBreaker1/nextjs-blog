@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import PostContainer from '@/components/postContainer/postContainer';
+import SearchBar from '@/components/searchBar/searchBar';
 import { marked } from 'marked';
 import { useUser } from '../api/middleware/userContext';
 
@@ -35,8 +36,9 @@ const Blog = () => {
 
       <br></br>
 
-      <h2>Search Bar</h2>
+      <SearchBar />
 
+      <br></br>
       <br></br>
             
       <div className='flexbox'>

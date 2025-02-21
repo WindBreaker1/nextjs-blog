@@ -1,0 +1,11 @@
+.searchBar {
+  width: 100%;
+  border: none;
+  border-radius: 10px;
+  background-color: #3b3b3b;
+  padding: 15px 10px 15px 10px;
+}
+
+.searchBar:hover {
+  background-color: #454545;
+}
